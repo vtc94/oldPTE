@@ -65,7 +65,7 @@ function getQuestions(lastAttempt){
 		}
 	};
 	
-	xhttp.open("GET", "RS.txt", true);
+	xhttp.open("GET", "./rs/RS.txt", true);
 	xhttp.send();
 }
 
