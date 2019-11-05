@@ -65,7 +65,7 @@ function getQuestions(lastAttempt){
 		}
 	};
 	
-	xhttp.open("GET", "./rs/RS.txt", true);
+	xhttp.open("GET", "../rs/transcripts.txt", true);
 	xhttp.send();
 }
 
@@ -73,7 +73,7 @@ function getQuestions(lastAttempt){
 function countTime(){
 	clearInterval(countdown);
 	
-	audio = new Audio('./rs/rs/' + selectedQuestion + '.mp3');
+	audio = new Audio('../rs/audio/' + selectedQuestion + '.mp3');
 
 	var countdownNum = 3;
 	
@@ -301,16 +301,18 @@ document.onkeydown = function(event){
 		previousQuestion();
 	} else if(event.keyCode == 38 || event.keyCode == 87){
 		//press up arrow key
-		
+		randomQuestion();
 	} else if(event.keyCode == 39 || event.keyCode == 68){
 		//press right arrow key
 		nextQuestion();
 	} else if(event.keyCode == 40 || event.keyCode == 83){
 		//press down arrow key
-		randomQuestion();
-	} else if(event.keyCode == 32){
-		//press white space key
 		tryAgain();
+	} else if(event.keyCode == 32){
+		tryAgain();
+	} else if(event.keyCode == 13){
+		//press white space key
+		randomQuestion();
 	}
 }
  
