@@ -350,9 +350,11 @@ document.onkeydown = function(event){
 		} else if(event.keyCode == 32){
 			//press white space key
 			tryAgain();
-		} else if(event.keyCode == 13){
-			checkResult();
 		}
+	}
+	
+	if(event.keyCode == 13){
+		checkResult();
 	}
 }
  
