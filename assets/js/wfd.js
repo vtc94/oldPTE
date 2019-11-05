@@ -322,25 +322,37 @@ function manualMode(){
 }
 manualMode();
 
+var onFocus = false;
+
+document.getElementById("input").onfocus = function(){
+	onFocus = true; 
+};
+
+document.getElementById("input").onblur = function(){
+	onFocus = false;
+};
+
 // Change question by pressing a key
 document.onkeydown = function(event){		
-	if(event.keyCode == 37){
-		//press left arrow key
-		previousQuestion();
-	} else if(event.keyCode == 38){
-		//press up arrow key
-		randomQuestion();
-	} else if(event.keyCode == 39){
-		//press right arrow key
-		nextQuestion();
-	} else if(event.keyCode == 40){
-		//press down arrow key
-		tryAgain();
-	} else if(event.keyCode == 32){
-		//press white space key
-		
-	} else if(event.keyCode == 13){
-		checkResult();
+	if(!onFocus){
+		if(event.keyCode == 37){
+			//press left arrow key
+			previousQuestion();
+		} else if(event.keyCode == 38){
+			//press up arrow key
+			randomQuestion();
+		} else if(event.keyCode == 39){
+			//press right arrow key
+			nextQuestion();
+		} else if(event.keyCode == 40){
+			//press down arrow key
+			tryAgain();
+		} else if(event.keyCode == 32){
+			//press white space key
+			tryAgain();
+		} else if(event.keyCode == 13){
+			checkResult();
+		}
 	}
 }
  
