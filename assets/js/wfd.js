@@ -355,10 +355,9 @@ document.onkeydown = function(event){
 		} else if(event.keycode == 77){
 			manualMode();
 		}
-	} else {
-		event.preventDefault();
-		
+	} else {	
 		if(event.keyCode == 13){
+			event.preventDefault();
 			checkResult();
 			document.getElementById("input").blur();
 		}
