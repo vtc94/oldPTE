@@ -350,11 +350,18 @@ document.onkeydown = function(event){
 		} else if(event.keyCode == 32){
 			//press white space key
 			tryAgain();
+		} else if(event.keycode == 65){
+			autoMode();
+		} else if(event.keycode == 77){
+			manualMode();
 		}
-	}
-	
-	if(event.keyCode == 13){
-		checkResult();
+	} else {
+		event.preventDefault();
+		
+		if(event.keyCode == 13){
+			checkResult();
+			document.getElementById("input").blur();
+		}
 	}
 }
  
