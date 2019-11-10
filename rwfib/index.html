@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<style>
+			body * {
+				box-sizing: border-box;
+				text-align: center;
+			}
+			
+			#question {
+				width: 80%;
+				margin: auto;
+			}
+			#control {
+				width: 90%;
+				margin: auto;
+				font-size: 0;
+				padding: 0;
+				
+			}
+			#control div{
+				display: inline-block;
+				width: 33.33%;
+				margin: 0;
+				padding: 0;
+				vertical-align: middle;
+			}
+			
+			#control div{
+				text-align: center;
+			}
+
+			#auto {
+				text-align: center;
+			}
+			#auto button {
+				outline: 0;
+			}
+
+		</style>
+	</head>
+	<body>			
+		<div id="rs">
+			<h1 style="font-size: 30px;color:rgba(200,200,200,0.9);text-align:left;margin:0;padding: 10px 0 10px 3%;background-color:#00838F;">
+				Fill in blank_RW
+				<a href="../index.html" style="float:right;margin-right: 3%;color:rgba(200,200,200,0.9);text-decoration:none;">Home <<</a>
+			</h1>
+			<br><br><br><br>
+			<div id="question"></div>
+			<br><br><br>
+			<div id="chooseQuestion"><b>Select question:</b> <select></select></div>
+			<br>
+			<div id="questionNumber" style="font-size:30px;color:rgba(50,50,50,0.93)"></div>
+			<br>
+			<button onclick="checkResult()">Check</button>
+			<br><br><br>
+			<div id="correct">Correct: </div>
+			<br><br>
+			<div id="auto">
+				<button onclick="autoMode()">Auto</button><button onclick="manualMode()">Manual</button>
+				<br><br><div id="autoNotice">Auto next is off</div>
+			</div>
+			<br><br>
+			<div id="control">
+				<div><button class="btn btn-default" onclick="previousQuestion()">Previous</button></div>
+				<div><button class="btn btn-default" onclick="randomQuestion()">Random</button></div>
+				<div><button class="btn btn-default" onclick="nextQuestion()">Next</button></div>
+			</div>
+		</div>
+
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+		
+		<!-- TODO: Add SDKs for Firebase products that you want to use
+			https://firebase.google.com/docs/web/setup#available-libraries -->
+		
+		<script>
+		// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyAI3DcxcJRHcJkYi9GvFcToIy9cq6QYIfk",
+				authDomain: "pteapp-47926.firebaseapp.com",
+				databaseURL: "https://pteapp-47926.firebaseio.com",
+				projectId: "pteapp-47926",
+				storageBucket: "pteapp-47926.appspot.com",
+				messagingSenderId: "714326360861",
+				appId: "1:714326360861:web:f239473a595d507f6757f4"
+			};
+		
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			var db = firebase.database();
+		</script>
+
+		<script src="../assets/js/rwfib.js"></script>
+	</body>
+</html>
