@@ -111,10 +111,14 @@ function nextQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
 	//document.getElementsByTagName("select")[0].onchange();
 	getQuestion();
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
 function previousQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
 	//document.getElementsByTagName("select")[0].onchange();
 	getQuestion();	
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
