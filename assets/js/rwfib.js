@@ -1,3 +1,35 @@
+db.ref('fibrw').once('value', snapshot => {
+	if(snapshot.val()){
+		var fibrw = {
+				lastAttempt: snapshot.val().lastAttempt,
+				redo: snapshot.val().redo,
+		};
+		
+		localStorage.setItem("fibrw", JSON.stringify(fibrw));
+	} else {
+		var fibrw = localStorage.getItem("fibrw") == null? {lastAttempt: "0", redo: ""} : JSON.parse(localStorage.getItem("fibrw"));
+		db.ref('fibrw').update(fibrw);
+	}
+	
+	var lastAttempt = localStorage.getItem("fibrw") == null? snapshot.val().lastAttempt : JSON.parse(localStorage.getItem("fibrw")).lastAttempt;
+	
+	var options = '';
+	
+	for(var i = 0; i < snapshot.val().length; i++){
+		options += '<option>' + (i + 1) + '</option>';
+	}
+	
+	document.getElementById("chooseQuestion").innerHTML = "<b>Select question: </b> <select>" + options + "</select>";
+		
+	getQuestion(lastAttempt + 1);
+	console.log(JSON.parse(localStorage.getItem("fibrw")));
+	
+	document.getElementsByTagName("select")[0].onchange = function(){
+		var questionNum = document.getElementsByTagName("select")[0].value;
+		getQuestion(questionNum);
+	});
+});
+
 function selectQuestion(){
 	return db.ref('fibrw/questions').once('value', snapshot => {
 		var options = '';
@@ -11,20 +43,22 @@ function selectQuestion(){
 }
 
 var q;
-function getQuestion(){
+function getQuestion(questionNum){
+	document.getElementsByTagName("select")[0].value = questionNum;
+	
 	var selectedQuestion;
 	selectedQuestion = document.getElementsByTagName("select")[0].value;
 
 	db.ref('fibrw/questions/' + (selectedQuestion - 1)).once('value', snapshot => {
 		q = snapshot.val();
 		
-		var question = snapshot.val().question;
-
-		for(var i = 0; i < snapshot.val().inputs.length; i++){
+		var question = q.question;
+	
+		for(var i = 0; i < q.inputs.length; i++){
 			var input =  '';
 			
-			for(var j = 0; j < snapshot.val().inputs[i].length; j++){
-				input += '<li onclick=fillInBlank(this.innerText)>' + snapshot.val().inputs[i][j] + '</li>' ;
+			for(var j = 0; j < q.inputs[i].length; j++){
+				input += '<li onclick=fillInBlank(this.innerText)>' + q.inputs[i][j] + '</li>' ;
 			}
 			
 			var inputs = '<span class="dropdown">'
@@ -44,9 +78,9 @@ function getQuestion(){
 	});
 }
 
-selectQuestion().then(db => {
+/*selectQuestion().then(db => {
 	getQuestion();
-});
+});*/
 
 function fillInBlank(input){
 	document.getElementsByClassName("open")[0].getElementsByTagName("button")[0].innerHTML = input;
@@ -79,9 +113,9 @@ function checkResult(){
     document.getElementById("correct").innerHTML = "Correct: " + correct + "/" + answers.length + "<br>" + answers;
     console.log(correct + "/" + answers.length);
 	
-	/*var fibrw = localStorage.getItem("fibrw") == null? {lastAttempt: "", redo: ""} : JSON.parse(localStorage.getItem("fibrw"));
+	var fibrw = localStorage.getItem("fibrw") == null? {lastAttempt: "", redo: ""} : JSON.parse(localStorage.getItem("fibrw"));
 	
-	var question = document.getElementsByClassName("inputPagination")[0].value;
+	var question = document.getElementsByTagName("select")[0].value;
 	fibrw.lastAttempt = question;
 	
 	if(correct/answers.length < 0.8){
@@ -104,13 +138,13 @@ function checkResult(){
 	console.log(answers);
 	localStorage.setItem("fibrw", JSON.stringify(fibrw))
 	
-	console.log(JSON.parse(localStorage.getItem("fibrw")));*/
+	console.log(JSON.parse(localStorage.getItem("fibrw")));
 }
 
 function nextQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
 	//document.getElementsByTagName("select")[0].onchange();
-	getQuestion();
+	//getQuestion(document.getElementsByTagName("select")[0].value);
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
@@ -118,7 +152,7 @@ function nextQuestion(){
 function previousQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
 	//document.getElementsByTagName("select")[0].onchange();
-	getQuestion();	
+	//getQuestion(document.getElementsByTagName("select")[0].value);	
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
