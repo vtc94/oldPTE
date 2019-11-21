@@ -15,19 +15,28 @@ db.ref('fibrw').once('value', snapshot => {
 	
 	var options = '';
 	
-	for(var i = 0; i < snapshot.val().length; i++){
+	for(var i = 0; i < snapshot.val().questions.length; i++){
 		options += '<option>' + (i + 1) + '</option>';
 	}
 	
 	document.getElementById("chooseQuestion").innerHTML = "<b>Select question: </b> <select>" + options + "</select>";
-		
-	getQuestion(lastAttempt + 1);
+	console.log(snapshot.val().length);
+	if(lastAttempt == 316){
+		document.getElementsByTagName("select")[0].value = 1;
+		console.log(document.getElementsByTagName("select")[0].value );
+	} else {
+		document.getElementsByTagName("select")[0].value = parseInt(lastAttempt) + 1;
+	}
+	
+	var questionNum = document.getElementsByTagName("select")[0].value;
+	getQuestion(questionNum);
+	
 	console.log(JSON.parse(localStorage.getItem("fibrw")));
 	
 	document.getElementsByTagName("select")[0].onchange = function(){
-		var questionNum = document.getElementsByTagName("select")[0].value;
+		questionNum = document.getElementsByTagName("select")[0].value;
 		getQuestion(questionNum);
-	});
+	};
 });
 
 function selectQuestion(){
