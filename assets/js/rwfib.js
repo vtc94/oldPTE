@@ -20,10 +20,9 @@ db.ref('fibrw').once('value', snapshot => {
 	}
 	
 	document.getElementById("chooseQuestion").innerHTML = "<b>Select question: </b> <select>" + options + "</select>";
-	console.log(snapshot.val().length);
+
 	if(lastAttempt == 316){
 		document.getElementsByTagName("select")[0].value = 1;
-		console.log(document.getElementsByTagName("select")[0].value );
 	} else {
 		document.getElementsByTagName("select")[0].value = parseInt(lastAttempt) + 1;
 	}
@@ -152,7 +151,7 @@ function checkResult(){
 
 function nextQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
-	//document.getElementsByTagName("select")[0].onchange();
+	document.getElementsByTagName("select")[0].onchange();
 	//getQuestion(document.getElementsByTagName("select")[0].value);
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -160,8 +159,9 @@ function nextQuestion(){
 
 function previousQuestion(){
 	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
-	//document.getElementsByTagName("select")[0].onchange();
+	document.getElementsByTagName("select")[0].onchange();
 	//getQuestion(document.getElementsByTagName("select")[0].value);	
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	document.getElementsByTagName("select")[0].onchange();
 }
