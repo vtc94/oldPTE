@@ -21,7 +21,7 @@ db.ref('fibrw').once('value', snapshot => {
 	
 	document.getElementById("chooseQuestion").innerHTML = "<b>Select question: </b> <select>" + options + "</select>";
 
-	if(lastAttempt == 316){
+	if(lastAttempt == document.getElementsByTagName("select")[0].length){
 		document.getElementsByTagName("select")[0].value = 1;
 	} else {
 		document.getElementsByTagName("select")[0].value = parseInt(lastAttempt) + 1;
@@ -129,14 +129,14 @@ function checkResult(){
 	if(correct/answers.length < 0.8){
 		if(fibrw.redo == null){
 			fibrw.redo = question + ",";
-		} else if(fibrw.redo.indexOf(question + ",") < 0){
-			fibrw.redo = fibrw.redo + question + ",";
+		} else if(fibrw.redo.indexOf(" " + question + ",") < 0){
+			fibrw.redo = fibrw.redo + " " + question + ",";
 		}
 	} else {
 		if(fibrw.redo == null){
 			
-		} else if(fibrw.redo.indexOf(question + ",") > 0){
-			fibrw.redo = fibrw.redo.replace(question + ",", "");
+		} else if(fibrw.redo.indexOf(" " + question + ",") > 0){
+			fibrw.redo = fibrw.redo.replace(" " + question + ",", "");
 			console.log(question);
 		}
 	}
@@ -149,8 +149,16 @@ function checkResult(){
 	console.log(JSON.parse(localStorage.getItem("fibrw")));
 }
 
+function tryAgain(){
+	//clearInterval(goNext);
+	//goNextTime = 5;
+	document.getElementsByTagName("select")[0].onchange();
+}
+
 function nextQuestion(){
-	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
+	if(document.getElementsByTagName("select")[0].value != document.getElementsByTagName("select")[0].length){
+		document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
+	}
 	document.getElementsByTagName("select")[0].onchange();
 	//getQuestion(document.getElementsByTagName("select")[0].value);
 	document.body.scrollTop = 0; // For Safari
@@ -158,10 +166,48 @@ function nextQuestion(){
 }
 
 function previousQuestion(){
-	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
+	if(document.getElementsByTagName("select")[0].value != 1){
+		document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
+	}
 	document.getElementsByTagName("select")[0].onchange();
 	//getQuestion(document.getElementsByTagName("select")[0].value);	
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 	document.getElementsByTagName("select")[0].onchange();
+}
+
+function redoQuestion(){
+	clearInterval(goNext);
+	goNextTime = 5;
+	
+	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
+	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
+	fibrw.redo = fibrw.redo.replace(redo + ', ', '') + ' ' + redo + ',';
+	
+	document.getElementsByTagName("select")[0].value = redo;
+	document.getElementsByTagName("select")[0].onchange();
+	
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+document.onkeydown = function(event){		
+	if(event.keyCode == 37 || event.keyCode == 65){
+		//press left arrow key
+		previousQuestion();
+	} else if(event.keyCode == 38 || event.keyCode == 87){
+		//press up arrow key
+		redoQuestion();
+	} else if(event.keyCode == 39 || event.keyCode == 68){
+		//press right arrow key
+		nextQuestion();
+	} else if(event.keyCode == 40 || event.keyCode == 83){
+		//press down arrow key
+		tryAgain();
+	} else if(event.keyCode == 32){
+		tryAgain();
+	} else if(event.keyCode == 13){
+		//press white space key
+		redoQuestion();
+	}
 }

@@ -24,9 +24,7 @@ db.ref('wfd').once('value', snapshot => {
 	console.log(JSON.parse(localStorage.getItem("wfd")));
 });
 	
-function getQuestions(lastAttempt){
-	document.getElementById("questionNumber").innerHTML = '<h1>Question ' + (parseInt(lastAttempt) + 1) + '</h1>'; 
-	
+function getQuestions(lastAttempt){	
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && (this.status == 200)){
@@ -39,7 +37,14 @@ function getQuestions(lastAttempt){
 			}
 			
 			document.getElementById("chooseQuestion").innerHTML = "<b>Select question: </b> <select>" + options + "</select>";
-			document.getElementsByTagName("select")[0].value = parseInt(lastAttempt) + 1;
+			
+			if(lastAttempt == document.getElementsByTagName("select")[0].length){
+				document.getElementById("questionNumber").innerHTML = '<h1>Question 1</h1>'; 
+				document.getElementsByTagName("select")[0].value = 1;
+			} else{
+				document.getElementById("questionNumber").innerHTML = '<h1>Question ' + (parseInt(lastAttempt) + 1) + '</h1>'; 
+				document.getElementsByTagName("select")[0].value = parseInt(lastAttempt) + 1;				
+			}			
 			
 			selectedQuestion = document.getElementsByTagName("select")[0].value;
 			selectedTranscript = sentences[(selectedQuestion -1)].substring(sentences[(selectedQuestion -1)].indexOf(" ")).trim();
@@ -245,14 +250,14 @@ function checkResult(){
 	if(correct/answers.length < 0.8){
 		if(wfd.redo == null){
 			wfd.redo = selectedQuestion + ",";
-		} else if(wfd.redo.indexOf(selectedQuestion + ",") < 0){
-			wfd.redo = wfd.redo + selectedQuestion + ",";
+		} else if(wfd.redo.indexOf(" " + selectedQuestion + ",") < 0){
+			wfd.redo = wfd.redo + " " + selectedQuestion + ",";
 		}
 	} else {
 		if(!wfd.redo){
 			
-		} else if(wfd.redo.indexOf(selectedQuestion + ",") >= 0){
-			wfd.redo = wfd.redo.replace(selectedQuestion + ",", "");
+		} else if(wfd.redo.indexOf(" " + selectedQuestion + ",") >= 0){
+			wfd.redo = wfd.redo.replace(" " + selectedQuestion + ",", "");
 			//console.log(selectedQuestion);
 		}
 	}
@@ -286,21 +291,30 @@ function tryAgain(){
 function nextQuestion(){
 	clearInterval(goNext);
 	goNextTime = 5;
-	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
+	if(document.getElementsByTagName("select")[0].value != document.getElementsByTagName("select")[0].length){
+		document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) + 1;
+	}
 	document.getElementsByTagName("select")[0].onchange();
 }
 
 function previousQuestion(){
 	clearInterval(goNext);
 	goNextTime = 5;
-	document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
+	if(document.getElementsByTagName("select")[0].value != 1){
+		document.getElementsByTagName("select")[0].value = parseInt(document.getElementsByTagName("select")[0].value) - 1;
+	}
 	document.getElementsByTagName("select")[0].onchange();
 }
 
-function randomQuestion(){
+function redoQuestion(){
 	clearInterval(goNext);
 	goNextTime = 5;
-	document.getElementsByTagName("select")[0].value = Math.floor(Math.random() * Math.floor(document.getElementsByTagName("select")[0].length));
+	
+	var wfd = JSON.parse(localStorage.getItem("wfd"));
+	var redo = wfd.redo.substring(0, wfd.redo.indexOf(','));
+	wfd.redo = wfd.redo.replace(redo + ', ', '') + ' ' + redo + ',';
+	
+	document.getElementsByTagName("select")[0].value = redo;
 	document.getElementsByTagName("select")[0].onchange();
 }
 
@@ -340,7 +354,7 @@ document.onkeydown = function(event){
 			previousQuestion();
 		} else if(event.keyCode == 38){
 			//press up arrow key
-			randomQuestion();
+			redoQuestion();
 		} else if(event.keyCode == 39){
 			//press right arrow key
 			nextQuestion();
