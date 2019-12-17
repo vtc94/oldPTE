@@ -247,7 +247,7 @@ function checkResult(){
 	
 	wfd.lastAttempt = selectedQuestion;
 	
-	if(correct/answers.length < 0.8){
+	if(correct/answers.length < 1){
 		if(wfd.redo == null){
 			wfd.redo = selectedQuestion + ",";
 		} else if(wfd.redo.indexOf(" " + selectedQuestion + ",") < 0){
