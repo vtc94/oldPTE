@@ -314,7 +314,7 @@ function redoQuestion(){
 	var redo = wfd.redo.substring(0, wfd.redo.indexOf(','));
 	wfd.redo = wfd.redo.replace(redo + ', ', '') + ' ' + redo + ',';
 	
-	document.getElementsByTagName("select")[0].value = redo;
+	document.getElementsByTagName("select")[0].value = parseInt(redo);
 	document.getElementsByTagName("select")[0].onchange();
 }
 

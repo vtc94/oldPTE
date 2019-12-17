@@ -184,7 +184,7 @@ function redoQuestion(){
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
 	fibrw.redo = fibrw.redo.replace(redo + ', ', '') + ' ' + redo + ',';
 	
-	document.getElementsByTagName("select")[0].value = redo;
+	document.getElementsByTagName("select")[0].value = parseInt(redo);
 	document.getElementsByTagName("select")[0].onchange();
 	
 	document.body.scrollTop = 0; // For Safari

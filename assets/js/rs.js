@@ -290,7 +290,7 @@ function redoQuestion(){
 	var redo = rs.redo.substring(0, rs.redo.indexOf(','));
 	rs.redo = rs.redo.replace(redo + ', ', '') + ' ' + redo + ',';
 	
-	document.getElementsByTagName("select")[0].value = redo;
+	document.getElementsByTagName("select")[0].value = parseInt(redo);
 	document.getElementsByTagName("select")[0].onchange();
 }
 
