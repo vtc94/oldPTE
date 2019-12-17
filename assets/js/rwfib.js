@@ -82,7 +82,7 @@ function getQuestion(questionNum){
 			question = question.replace('___', inputs);
 		}
 		
-		document.getElementById("question").innerHTML = question;
+		document.getElementById("question").innerHTML = '<b>' + question + '</b>';
 	});
 }
 
