@@ -177,8 +177,8 @@ function previousQuestion(){
 }
 
 function redoQuestion(){
-	clearInterval(goNext);
-	goNextTime = 5;
+	//clearInterval(goNext);
+	//goNextTime = 5;
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
