@@ -7,6 +7,7 @@ var countdown;
 var audio;
 var auto = false;
 var manual = true;
+var haveDone = 0;
 
 db.ref('rs').once('value', snapshot => {
 	if(snapshot.val()){
@@ -254,6 +255,12 @@ function checkResult(){
 	console.log(JSON.parse(localStorage.getItem("rs")));
 	
 	recognition.stop();
+	
+	haveDone++;
+	
+	if(haveDone == 50){
+		alert("Congratualation! You have done 50 questions...");
+	}
 }
 
 function tryAgain(){

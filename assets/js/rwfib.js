@@ -1,3 +1,5 @@
+var haveDone = 0;
+
 db.ref('fibrw').once('value', snapshot => {
 	if(snapshot.val()){
 		var fibrw = {
@@ -147,6 +149,12 @@ function checkResult(){
 	localStorage.setItem("fibrw", JSON.stringify(fibrw))
 	
 	console.log(JSON.parse(localStorage.getItem("fibrw")));
+	
+	haveDone++;
+	
+	if(haveDone == 30){
+		alert("Congratualation! You have done 30 questions...");
+	}
 }
 
 function tryAgain(){

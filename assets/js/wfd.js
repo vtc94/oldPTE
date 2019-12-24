@@ -9,6 +9,7 @@ var auto = false;
 var manual = true;
 var goNextTime = 7;
 var goNext;
+var haveDone = 0;
 
 db.ref('wfd').once('value', snapshot => {
 	if(snapshot.val()){
@@ -279,6 +280,12 @@ function checkResult(){
 				nextQuestion();
 			}
 		},1000);
+	}
+	
+	haveDone++;
+	
+	if(haveDone == 30){
+		alert("Congratualation! You have done 30 questions...");
 	}
 }
 
