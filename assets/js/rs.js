@@ -288,7 +288,9 @@ function redoQuestion(){
 	
 	var rs = JSON.parse(localStorage.getItem("rs"));
 	var redo = rs.redo.substring(0, rs.redo.indexOf(','));
-	rs.redo = rs.redo.replace(redo + ', ', '') + ' ' + redo + ',';
+	rs.redo = rs.redo.replace(redo + ', ', '') + redo + ',';
+	
+	localStorage.setItem("rs", JSON.stringify(rs));
 	
 	document.getElementsByTagName("select")[0].value = parseInt(redo);
 	document.getElementsByTagName("select")[0].onchange();
