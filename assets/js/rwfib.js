@@ -182,7 +182,9 @@ function redoQuestion(){
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
-	fibrw.redo = fibrw.redo.replace(redo + ', ', '') + ' ' + redo + ',';
+	fibrw.redo = fibrw.redo.replace(redo + ', ', '') + redo + ',';
+	
+	localStorage.setItem("fibrw", JSON.stringify(fibrw));
 	
 	document.getElementsByTagName("select")[0].value = parseInt(redo);
 	document.getElementsByTagName("select")[0].onchange();
