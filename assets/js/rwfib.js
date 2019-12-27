@@ -152,6 +152,8 @@ function checkResult(){
 	
 	haveDone++;
 	
+	console.log("Question Done: " + haveDone);
+	
 	if(haveDone == 30){
 		alert("Congratualation! You have done 30 questions...");
 	}
