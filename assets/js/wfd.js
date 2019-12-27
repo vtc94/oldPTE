@@ -321,12 +321,16 @@ function redoQuestion(){
 	
 	var wfd = JSON.parse(localStorage.getItem("wfd"));
 	var redo = wfd.redo.substring(0, wfd.redo.indexOf(','));
-	wfd.redo = wfd.redo.replace(redo + ', ', '') + redo + ',';
+	if(parseInt(redo) < parseInt(wfd.lastAttempt)){
+		alert("You have just redo all redo questions");
+	} else {
+		wfd.redo = wfd.redo.replace(redo + ', ', '') + redo + ',';
 	
-	localStorage.setItem("wfd", JSON.stringify(wfd));
+		localStorage.setItem("wfd", JSON.stringify(wfd));
 	
-	document.getElementsByTagName("select")[0].value = parseInt(redo);
-	document.getElementsByTagName("select")[0].onchange();
+		document.getElementsByTagName("select")[0].value = parseInt(redo);
+		document.getElementsByTagName("select")[0].onchange();
+	}
 }
 
 function autoMode(){

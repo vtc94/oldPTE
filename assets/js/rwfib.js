@@ -192,15 +192,19 @@ function redoQuestion(){
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
-	fibrw.redo = fibrw.redo.replace(redo + ', ', '') + redo + ',';
+	if(parseInt(redo) < parseInt(fibrw.lastAttempt)){
+		alert("You have just gone through the redo track!");
+	} else {
+		fibrw.redo = fibrw.redo.replace(redo + ', ', '') + redo + ',';
 	
-	localStorage.setItem("fibrw", JSON.stringify(fibrw));
+		localStorage.setItem("fibrw", JSON.stringify(fibrw));
 	
-	document.getElementsByTagName("select")[0].value = parseInt(redo);
-	document.getElementsByTagName("select")[0].onchange();
+		document.getElementsByTagName("select")[0].value = parseInt(redo);
+		document.getElementsByTagName("select")[0].onchange();
 	
-	document.body.scrollTop = 0; // For Safari
-	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	}
 }
 
 document.onkeydown = function(event){		
