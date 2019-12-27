@@ -297,10 +297,11 @@ function redoQuestion(){
 	
 	var rs = JSON.parse(localStorage.getItem("rs"));
 	var redo = rs.redo.substring(0, rs.redo.indexOf(','));
+	
 	if(parseInt(redo) < parseInt(rs.lastAttempt)){
 		alert("You have just gone through the redo track!");
 	} else {
-		rs.redo = rs.redo.replace(redo + ', ', '') + redo + ',';
+		rs.redo = rs.redo.replace(redo + ', ', '') + " " + redo + ',';
 	
 		localStorage.setItem("rs", JSON.stringify(rs));
 	

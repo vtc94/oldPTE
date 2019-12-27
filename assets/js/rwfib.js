@@ -195,7 +195,7 @@ function redoQuestion(){
 	if(parseInt(redo) < parseInt(fibrw.lastAttempt)){
 		alert("You have just gone through the redo track!");
 	} else {
-		fibrw.redo = fibrw.redo.replace(redo + ', ', '') + redo + ',';
+		fibrw.redo = fibrw.redo.replace(redo + ', ', '') + " " + redo + ',';
 	
 		localStorage.setItem("fibrw", JSON.stringify(fibrw));
 	
