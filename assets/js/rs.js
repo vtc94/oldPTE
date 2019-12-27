@@ -257,7 +257,7 @@ function checkResult(){
 	recognition.stop();
 	
 	haveDone++;
-	
+	console.log("Question Done: " + havedone);
 	if(haveDone == 50){
 		alert("Congratualation! You have done 50 questions...");
 	}

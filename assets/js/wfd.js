@@ -283,7 +283,7 @@ function checkResult(){
 	}
 	
 	haveDone++;
-	
+	console.log("Question Done: " + havedone);
 	if(haveDone == 30){
 		alert("Congratualation! You have done 30 questions...");
 	}
