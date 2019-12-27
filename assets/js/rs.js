@@ -236,7 +236,7 @@ function checkResult(){
 	
 	if(correct/answers.length < 0.8){
 		if(rs.redo == null){
-			rs.redo = selectedQuestion + ",";
+			rs.redo = " " + selectedQuestion + ",";
 		} else if(rs.redo.indexOf(" " + selectedQuestion + ",") < 0){
 			rs.redo = rs.redo + " " + selectedQuestion + ",";
 		}
