@@ -315,6 +315,8 @@ function previousQuestion(){
 	document.getElementsByTagName("select")[0].onchange();
 }
 
+var lastRedo =" 0";
+
 function redoQuestion(){
 	clearInterval(goNext);
 	goNextTime = 5;
@@ -322,9 +324,11 @@ function redoQuestion(){
 	var wfd = JSON.parse(localStorage.getItem("wfd"));
 	var redo = wfd.redo.substring(0, wfd.redo.indexOf(','));
 	
-	if(parseInt(redo) < parseInt(wfd.lastAttempt)){
-		alert("You have just redo all redo questions");
+	if(parseInt(redo) < parseInt(lastRedo)){
+		alert("You have just gone through the redo track!");
 	} else {
+		lastRedo = redo;
+		
 		wfd.redo = wfd.redo.replace(redo + ', ', '') + " " + redo + ',';
 	
 		localStorage.setItem("wfd", JSON.stringify(wfd));

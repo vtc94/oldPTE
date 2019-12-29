@@ -291,6 +291,8 @@ function previousQuestion(){
 	document.getElementsByTagName("select")[0].onchange();
 }
 
+var lastRedo =" 0";
+
 function redoQuestion(){
 	clearInterval(goNext);
 	goNextTime = 5;
@@ -298,9 +300,11 @@ function redoQuestion(){
 	var rs = JSON.parse(localStorage.getItem("rs"));
 	var redo = rs.redo.substring(0, rs.redo.indexOf(','));
 	
-	if(parseInt(redo) < parseInt(rs.lastAttempt)){
+	if(parseInt(redo) < parseInt(lastRedo)){
 		alert("You have just gone through the redo track!");
 	} else {
+		lastRedo = redo;
+		
 		rs.redo = rs.redo.replace(redo + ', ', '') + " " + redo + ',';
 	
 		localStorage.setItem("rs", JSON.stringify(rs));

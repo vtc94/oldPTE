@@ -186,15 +186,19 @@ function previousQuestion(){
 	document.getElementsByTagName("select")[0].onchange();
 }
 
+var lastRedo = "0";
+
 function redoQuestion(){
 	//clearInterval(goNext);
 	//goNextTime = 5;
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
-	if(parseInt(redo) < parseInt(fibrw.lastAttempt)){
+	if(parseInt(redo) < parseInt(lastRedo)){
 		alert("You have just gone through the redo track!");
 	} else {
+		lastRedo = redo;
+		
 		fibrw.redo = fibrw.redo.replace(redo + ', ', '') + " " + redo + ',';
 	
 		localStorage.setItem("fibrw", JSON.stringify(fibrw));
