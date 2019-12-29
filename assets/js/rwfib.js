@@ -199,7 +199,7 @@ function redoQuestion(){
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));
-	if(parseInt(redo) < parseInt(lastRedo)){
+	if(parseInt(lastRedo) != 0 && parseInt(redo) < parseInt(lastRedo)){
 		alert("You have just gone through the redo track!");
 	} else {
 		lastRedo = redo;

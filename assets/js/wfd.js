@@ -328,7 +328,7 @@ function redoQuestion(){
 	var wfd = JSON.parse(localStorage.getItem("wfd"));
 	var redo = wfd.redo.substring(0, wfd.redo.indexOf(','));
 	
-	if(parseInt(redo) < parseInt(lastRedo)){
+	if(parseInt(lastRedo) != 0 && parseInt(redo) < parseInt(lastRedo)){
 		alert("You have just gone through the redo track!");
 	} else {
 		lastRedo = redo;
