@@ -8,6 +8,7 @@ var audio;
 var auto = false;
 var manual = true;
 var haveDone = 0;
+var isRedo = false;
 
 db.ref('rs').once('value', snapshot => {
 	if(snapshot.val()){
@@ -232,7 +233,9 @@ function checkResult(){
 	
 	var rs = localStorage.getItem("rs") == null? {lastAttempt: "", redo: ""} : JSON.parse(localStorage.getItem("rs"));
 	
-	rs.lastAttempt = selectedQuestion;
+	if(!isRedo){
+		rs.lastAttempt = selectedQuestion;
+	}
 	
 	if(correct/answers.length < 0.8){
 		if(rs.redo == null){
@@ -294,6 +297,8 @@ function previousQuestion(){
 var lastRedo =" 0";
 
 function redoQuestion(){
+	isRedo = true;
+	
 	clearInterval(goNext);
 	goNextTime = 5;
 	

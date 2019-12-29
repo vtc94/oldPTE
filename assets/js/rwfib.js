@@ -1,4 +1,5 @@
 var haveDone = 0;
+var isRedo = false;
 
 db.ref('fibrw').once('value', snapshot => {
 	if(snapshot.val()){
@@ -126,7 +127,10 @@ function checkResult(){
 	var fibrw = localStorage.getItem("fibrw") == null? {lastAttempt: "", redo: ""} : JSON.parse(localStorage.getItem("fibrw"));
 	
 	var question = document.getElementsByTagName("select")[0].value;
-	fibrw.lastAttempt = question;
+	
+	if(!isRedo){
+		fibrw.lastAttempt = question;
+	}
 	
 	if(correct/answers.length < 0.8){
 		if(fibrw.redo == null){
@@ -191,6 +195,7 @@ var lastRedo = "0";
 function redoQuestion(){
 	//clearInterval(goNext);
 	//goNextTime = 5;
+	isRedo = true;
 	
 	var fibrw = JSON.parse(localStorage.getItem("fibrw"));
 	var redo = fibrw.redo.substring(0, fibrw.redo.indexOf(','));

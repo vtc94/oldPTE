@@ -10,6 +10,7 @@ var manual = true;
 var goNextTime = 7;
 var goNext;
 var haveDone = 0;
+var isRedo = false;
 
 db.ref('wfd').once('value', snapshot => {
 	if(snapshot.val()){
@@ -245,8 +246,9 @@ function checkResult(){
 	console.log(correct + "/" + answers.length);
 	
 	var wfd = localStorage.getItem("wfd") == null? {lastAttempt: "", redo: ""} : JSON.parse(localStorage.getItem("wfd"));
-	
-	wfd.lastAttempt = selectedQuestion;
+	if(!isRedo){
+		wfd.lastAttempt = selectedQuestion;
+	}
 	
 	if(correct/answers.length < 1){
 		if(!wfd.redo){
@@ -318,6 +320,8 @@ function previousQuestion(){
 var lastRedo =" 0";
 
 function redoQuestion(){
+	isRedo = true;
+	
 	clearInterval(goNext);
 	goNextTime = 5;
 	
