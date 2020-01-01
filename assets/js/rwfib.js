@@ -132,6 +132,8 @@ function checkResult(){
 		fibrw.lastAttempt = question;
 	}
 	
+	isRedo = false;
+	
 	if(correct/answers.length < 0.8){
 		if(fibrw.redo == null){
 			fibrw.redo = question + ",";

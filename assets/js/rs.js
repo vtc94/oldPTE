@@ -237,6 +237,8 @@ function checkResult(){
 		rs.lastAttempt = selectedQuestion;
 	}
 	
+	isRedo = false;
+	
 	if(correct/answers.length < 0.8){
 		if(rs.redo == null){
 			rs.redo = " " + selectedQuestion + ",";

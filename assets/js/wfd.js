@@ -250,6 +250,8 @@ function checkResult(){
 		wfd.lastAttempt = selectedQuestion;
 	}
 	
+	isRedo = false;
+		
 	if(correct/answers.length < 1){
 		if(!wfd.redo){
 			wfd.redo = " " + selectedQuestion + ",";
